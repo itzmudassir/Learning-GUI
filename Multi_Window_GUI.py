@@ -9,6 +9,28 @@ root.wm_attributes('-fullscreen', 'True')    # Screen Size
 root.configure(background='white')    # Background color of Window
 var = IntVar()    # Declaring variable "var" datatype
 r = IntVar()      # Declaring variable "r" datatype
+var=StringVar()
+var.set("file")
+
+def show():
+    global var
+    var.get()
+    if var.get() == "Picture1":
+        
+        Label(root, image=my_img1).place(x=20, y=200)
+        Label.destroy()
+
+        
+    if var.get() == "Picture2":
+        
+        Label(root, image=my_img2).place(x=20, y=200)
+        Label.destroy()
+    if var.get() == "Picture3":
+        
+        Label(root, image=my_img3).place(x=20, y=200)
+        Label.destroy()
+      
+
 
 
 def click():    # Creating "Click" Function
@@ -16,6 +38,7 @@ def click():    # Creating "Click" Function
 
     var.get()   # Getting the value of "var"
     r.get()     # Getting the value of "r"
+    
     if var.get() == 0:   # Applying first condition
         top = Toplevel()  # Creating Multi Window
         top.title("this is second window")   # Multi window title
@@ -64,7 +87,12 @@ Button(root, text="Button 1", bg='#ff0000', fg='#ffffff', command=click).pack() 
 Button(root, text="Back", command=root.destroy).pack()  # Creating a back button
 
 
-my_img1 = ImageTk.PhotoImage(Image.open("C:\Mudassir\Pictures\pic.png"))  # Image location
+my_img1 = ImageTk.PhotoImage(Image.open("C:\Mudassir\Pictures\pic.png"))  # First Image location
+my_img2 = ImageTk.PhotoImage(Image.open("C:\Mudassir\Pictures\pic2.png"))  # 2nd Image location
+my_img3 = ImageTk.PhotoImage(Image.open("C:\Mudassir\Pictures\pic3.png"))  # 3rd Image location
+
+OptionMenu(root,var,"Picture1","Picture2","Picture3").pack()
+Button=Button(root,text="click me",command=show).pack()
 
 # Mainloop
 root.mainloop()
