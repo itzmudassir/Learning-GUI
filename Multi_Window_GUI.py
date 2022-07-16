@@ -48,11 +48,6 @@ def click():    # Creating "Click" Function
                 top.wm_attributes('-fullscreen', 'True')  # Multi window size
                 messagebox.showinfo("Error", "Please select a radio button")  # Creating a message box
 
-            if r.get == 0:
-                top = Toplevel()  # Creating Multi window
-                top.title("this is second window")  # Multi Window size
-                top.wm_attributes('-fullscreen', 'True')  # Multi Window size
-                Label(top, text="COMING", font="Arial 28 bold").pack()
 
         Button(top, text="Click", command=click1).pack()  # Button for the radio buttons
 
