@@ -1,5 +1,6 @@
 from tkinter import *   # Importing Tkinter library
 import sqlite3
+from tkinter import messagebox  # Importing Messagebox library
 
 root = Tk()   # Creating a root window
 root.title("Database")   # Title name
@@ -57,6 +58,8 @@ def submit():
     text_entry4.delete(0, END)
     # Deleting the sixth text entry
     text_entry5.delete(0, END)
+
+    messagebox.showinfo("Info", "The Information has been saved")  # Creating a message box
 
 # Creating query function
 def query():
