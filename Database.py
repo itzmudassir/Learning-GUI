@@ -116,7 +116,7 @@ text_entry5.grid(row=5, column=1,padx=10, pady=10)
 # Creating buttons
 Button(root, text="Submit",padx=5, pady=5, command=submit).grid(row=7, column=1)  # Button to submit
 Button(root, text="Query",padx=5, pady=5,bg="#565446", fg="white", command=query).grid(row=7, column=0)    # Button for query
-Button(root, text="Exit",padx=20, pady=5,bg="#F00D4E", command=root.destroy).grid(row=7, column=2)  # Button to exit
+Button(root, text="X",padx=10, bg="#F00D4E", command=root.destroy).place(x=1330, y=0)  # Button to exit
 
 # Committing the changes
 connection.commit()
