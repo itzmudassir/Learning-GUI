@@ -1,6 +1,7 @@
 from tkinter import *   # Importing Tkinter library
 import sqlite3
 from tkinter import messagebox  # Importing Messagebox library
+import time
 
 root = Tk()   # Creating a root window
 root.title("Database")   # Title name
@@ -63,6 +64,7 @@ def submit():
 
 # Creating query function
 def query():
+    global record
     # Creating a database connection
     connection = sqlite3.connect("database.db")
     # Creating a cursor
@@ -76,9 +78,98 @@ def query():
     for record in records:
         print_records += str(record) + "\n"
     query_label = Label(root, text=print_records)
-    query_label.place(x=8, y=300)
+    query_label.place(x=8, y=330)
 
+# Creating a function to delete data
+def delete():
+    # Creating a database connection
+    connection = sqlite3.connect("database.db")
+    # Creating a cursor
+    cursor = connection.cursor()
+    # Deleting data from the table
+    cursor.execute("DELETE FROM addresses WHERE oid= " + search_entry.get())
+    # Committing changes
+    connection.commit()
+    # Closing the connection
+    connection.close()
+    search_entry.delete(0, END)
+    query()
+    messagebox.showinfo("Info", "The Information has been deleted")  # Creating a message box
+
+# Creating a function to save data
+def update_data():
+    return
+
+# Creating a function to update data
+def update():
+    up=Tk()
+    up.title("we are learning Tkinter")
+    up.geometry("500x500")
+    connection=sqlite3.connect("database.db")
+    cursor=connection.cursor()
+    record_id=search_entry.get()
+    cursor.execute("SELECT * FROM addresses WHERE oid="+record_id)
+    data=cursor.fetchall()
+    print(data)
+    print_record=''
+    for record in data:
+        print_record += str( record ) +"\n"
+    global first_name
+    global last_name
+    global phone_number
+    global address
+    global city
+    global zip_code
+
+    first_name_label=Label(up,text="First Name:")
+    first_name_label.grid(row=0,column=0,sticky=W)
+    first_name=Entry(up,width=30)
+    first_name.grid(row=0,column=1)
+
+    #create a label for the last name
+    last_name_label=Label(up,text="Last Name:")
+    last_name_label.grid(row=1,column=0,sticky=W)
+    last_name=Entry(up,width=30)
+    last_name.grid(row=1,column=1)
+
+    #create a label for the phone number
+    phone_number_label=Label(up,text="Phone Number:")
+    phone_number_label.grid(row=2,column=0,sticky=W)
+    phone_number=Entry(up,width=30)
+    phone_number.grid(row=2,column=1)
+
+    #create a label for the address
+    address_label=Label(up,text="Address:")
+    address_label.grid(row=3,column=0,sticky=W)
+    address=Entry(up,width=30)
+    address.grid(row=3,column=1)
+
+    #create a label for the city
+    city_label=Label(up,text="City:")
+    city_label.grid(row=4,column=0,sticky=W)
+    city=Entry(up,width=30)
+    city.grid(row=4,column=1)
+
+    #create a label for the zip code
+    zip_code_label=Label(up,text="Zip Code:")
+    zip_code_label.grid(row=5,column=0,sticky=W)
+    zip_code=Entry(up,width=30)
+    zip_code.grid(row=5,column=1)
     
+    
+    for record in data:
+        
+        first_name.insert(0,record[0])
+        last_name.insert(0,record[1])
+        phone_number.insert(0,record[2])
+        address.insert(0,record[3])
+        city.insert(0,record[4])
+        zip_code.insert(0,record[5])
+    
+    # Creating a button to update the data
+    Button(up, text="Save", command=update_data).place(x=180, y=125)
+    
+
         
 
 # Creating first Label
@@ -111,12 +202,22 @@ Label(root, text="Zip Code", font="dejavu 10 bold").grid(row=5, column=0,sticky=
 # Creating sixth Entry
 text_entry5 = Entry(root, width=35, border=2)
 text_entry5.grid(row=5, column=1,padx=10, pady=10)
+# Creating Search Label
+Label(root, text="Search", font="dejavu 10 bold").grid(row=6, column=0,sticky=W)
+# Creating search entry
+search_entry = Entry(root, width=35, border=2)
+search_entry.grid(row=6, column=1,padx=10, pady=10)
 
 
 # Creating buttons
 Button(root, text="Submit",padx=5, pady=5, command=submit).grid(row=7, column=1)  # Button to submit
 Button(root, text="Query",padx=5, pady=5,bg="#565446", fg="white", command=query).grid(row=7, column=0)    # Button for query
 Button(root, text="X",padx=10, bg="#F00D4E", command=root.destroy).place(x=1330, y=0)  # Button to exit
+
+# Creating delete button
+Button(root, text="Delete",padx=5, pady=5, command=delete).grid(row=7, column=2)
+# Creating update button
+Button(root, text="Update",padx=5, pady=5, command=update).grid(row=7, column=3)
 
 # Committing the changes
 connection.commit()
