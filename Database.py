@@ -76,7 +76,7 @@ def query():
     # Printing the data
     print_records = ""
     for record in records:
-        print_records += str(record) + "\n"
+        print_records += str(record[0]) + "\n"
     query_label = Label(root, text=print_records)
     query_label.place(x=8, y=330)
 
@@ -98,7 +98,27 @@ def delete():
 
 # Creating a function to save data
 def update_data():
-    return
+    # Creating a database connection
+    connection = sqlite3.connect("database.db")
+    # Creating a cursor
+    cursor = connection.cursor()
+    # Updating data in the table-
+    cursor.execute("UPDATE addresses SET first_name=:first_name, last_name=:last_name, phone_number=:phone_number, address=:address, city=:city, zip_code=:zip_code WHERE oid=:oid",
+                        {
+                            'first_name': first_name_e.get(),
+                            'last_name': last_name_e.get(),
+                            'phone_number': phone_number_e.get(),
+                            'address': address_e.get(),
+                            'city': city_e.get(),
+                            'zip_code': zip_code_e.get(),
+                            'oid': search_entry.get()
+                        })
+    # Committing changes
+    connection.commit() 
+    # Closing the connection
+    connection.close()
+    messagebox.showinfo("Info", "The Information has been updated")  # Creating a message box
+
 
 # Creating a function to update data
 def update():
@@ -114,60 +134,62 @@ def update():
     print_record=''
     for record in data:
         print_record += str( record ) +"\n"
-    global first_name
-    global last_name
-    global phone_number
-    global address
-    global city
-    global zip_code
+    global first_name_e
+    global last_name_e
+    global phone_number_e
+    global address_e
+    global city_e
+    global zip_code_e
 
     first_name_label=Label(up,text="First Name:")
     first_name_label.grid(row=0,column=0,sticky=W)
-    first_name=Entry(up,width=30)
-    first_name.grid(row=0,column=1)
+    first_name_e=Entry(up,width=30)
+    first_name_e.grid(row=0,column=1)
 
     #create a label for the last name
     last_name_label=Label(up,text="Last Name:")
     last_name_label.grid(row=1,column=0,sticky=W)
-    last_name=Entry(up,width=30)
-    last_name.grid(row=1,column=1)
+    last_name_e=Entry(up,width=30)
+    last_name_e.grid(row=1,column=1)
 
     #create a label for the phone number
     phone_number_label=Label(up,text="Phone Number:")
     phone_number_label.grid(row=2,column=0,sticky=W)
-    phone_number=Entry(up,width=30)
-    phone_number.grid(row=2,column=1)
+    phone_number_e=Entry(up,width=30)
+    phone_number_e.grid(row=2,column=1)
 
     #create a label for the address
     address_label=Label(up,text="Address:")
     address_label.grid(row=3,column=0,sticky=W)
-    address=Entry(up,width=30)
-    address.grid(row=3,column=1)
+    address_e=Entry(up,width=30)
+    address_e.grid(row=3,column=1)
 
     #create a label for the city
     city_label=Label(up,text="City:")
     city_label.grid(row=4,column=0,sticky=W)
-    city=Entry(up,width=30)
-    city.grid(row=4,column=1)
+    city_e=Entry(up,width=30)
+    city_e.grid(row=4,column=1)
 
     #create a label for the zip code
     zip_code_label=Label(up,text="Zip Code:")
     zip_code_label.grid(row=5,column=0,sticky=W)
-    zip_code=Entry(up,width=30)
-    zip_code.grid(row=5,column=1)
+    zip_code_e=Entry(up,width=30)
+    zip_code_e.grid(row=5,column=1)
     
     
     for record in data:
         
-        first_name.insert(0,record[0])
-        last_name.insert(0,record[1])
-        phone_number.insert(0,record[2])
-        address.insert(0,record[3])
-        city.insert(0,record[4])
-        zip_code.insert(0,record[5])
+        first_name_e.insert(0,record[0])
+        last_name_e.insert(0,record[1])
+        phone_number_e.insert(0,record[2])
+        address_e.insert(0,record[3])
+        city_e.insert(0,record[4])
+        zip_code_e.insert(0,record[5])
+    
     
     # Creating a button to update the data
     Button(up, text="Save", command=update_data).place(x=180, y=125)
+    
     
 
         
