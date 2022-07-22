@@ -76,7 +76,7 @@ def query():
     # Printing the data
     print_records = ""
     for record in records:
-        print_records += str(record[0]) + "\n"
+        print_records += str(record[6]) + " " + str(record[0]) + "" + str(record[1]) + "\n"
     query_label = Label(root, text=print_records)
     query_label.place(x=8, y=330)
 
@@ -233,7 +233,7 @@ search_entry.grid(row=6, column=1,padx=10, pady=10)
 
 # Creating buttons
 Button(root, text="Submit",padx=5, pady=5, command=submit).grid(row=7, column=1)  # Button to submit
-Button(root, text="Query",padx=5, pady=5,bg="#565446", fg="white", command=query).grid(row=7, column=0)    # Button for query
+Button(root, text="Show Record",padx=5, pady=5,bg="#565446", fg="white", command=query).grid(row=7, column=0)    # Button for query
 Button(root, text="X",padx=10, bg="#F00D4E", command=root.destroy).place(x=1330, y=0)  # Button to exit
 
 # Creating delete button
