@@ -118,12 +118,13 @@ def update_data():
     # Closing the connection
     connection.close()
     messagebox.showinfo("Info", "The Information has been updated")  # Creating a message box
+    search_entry.delete(0, END)
 
 
 # Creating a function to update data
 def update():
     up=Tk()
-    up.title("we are learning Tkinter")
+    up.title("Update Window")
     up.geometry("500x500")
     connection=sqlite3.connect("database.db")
     cursor=connection.cursor()
