@@ -1,3 +1,5 @@
+# PROGRAMMED BY: Mudassir Nadeem
+
 from tkinter import *
 from turtle import bgcolor
 import mysql.connector
@@ -7,6 +9,8 @@ root = Tk()
 root.title("General Store")
 root.wm_attributes('-fullscreen', 'True')    # Screen Size
 root.configure(background='white')    # Background color of Window
+
+# ***DATABASE CODE START HERE***
 
 # Creating database connection
 database = mysql.connector.connect(host="localhost",user="root",passwd="mudassir12345.",database="General_Store")
@@ -25,7 +29,7 @@ cursor1 = database.cursor()
 
 
 
-# Creating Functions *****
+# ***FUNCTIONS START HERE***
 
 # Creating Submit function
 def submit():
@@ -55,7 +59,7 @@ def submit():
     #return
 
 
-
+# Creating a function to remove text from the text entry
 def temp_text(e):
    text_entry.delete(0,"end")
    text_entry1.delete(0,"end")
