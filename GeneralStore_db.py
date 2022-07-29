@@ -59,7 +59,7 @@ def submit():
     #return
 
 
-# Creating a function to remove text from the text entry
+# Creating FUNCTIONS to remove text from the text entry
 def temp_text(e):
    text_entry.delete(0,"end")
 def temp_text1(e):
@@ -92,7 +92,7 @@ title_e = Label(root, text=" Store", font=("Helvetica", 40), bg="black", fg="whi
 first_name = Label(root, text="First Name", font=("Helvetica", "12", "bold"), bg="white").place(x=5, y=100)
 # Creating a "First Name" Text Entry
 text_entry = Entry(root, width=30, bg="white", border = 2)
-text_entry.insert(0, "Jack")
+text_entry.insert(0, "Jack", foreground="white")
 text_entry.place(x=180, y=102)
 text_entry.bind("<FocusIn>", temp_text)
 # Creating "Last Name" Label
@@ -163,28 +163,11 @@ submit = Button(root, text="Submit", font=("Helvetica", "12", "bold"), bg="black
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
 # CREATING BUTTONS
 
 #Button(root, text="Submit",padx=5, pady=5).grid(row=8, column=1)  # Button to submit
 #Button(root, text="Show Record",padx=5, pady=5,bg="#565446", fg="white").grid(row=8, column=0)    # Button for query
 Button(root, text="X",padx=10, bg="#F00D4E", command=root.destroy).place(x=1330, y=0)  # Button to exit
-
-
-
-
-
 
 
 root.mainloop()
