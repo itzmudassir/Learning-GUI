@@ -2,6 +2,7 @@
 
 from tkinter import *
 import mysql.connector
+import csv
 
 root = Tk()
 root.title("General Store")
@@ -45,6 +46,18 @@ cursor1 = database.cursor()
 
 
 # ***FUNCTIONS START HERE***
+
+
+# Creating function to "Export Data"
+def export_csv():
+    cursor1.execute("SELECT * FROM General")
+    result = cursor1.fetchall()
+    with open('General.csv', 'w',newline='') as csvfile:
+        writer = csv.writer(csvfile)
+        for row in result:
+            writer.writerow(row)
+    csvfile.close()
+    print("The data has been exported to the csv file")
 
 # Creating Submit function
 def clear_fields():
@@ -95,10 +108,39 @@ def temp_text9(e):
 
 # Creating function to insert data into the database
 def add_customer():
-    
-	sql_command = "INSERT INTO General(frist_name,last_name,phone,email,address_1,city,state,zipcode,price_paid,user_id) VALUES(%s,%s,%s,%s,%s,%s,%s,%s,%s,%s)"
-    values = (text_entry.get(),text_entry1.get(),text_entry2.get(),text_entry3.get(),text_entry4.get(),text_entry5.get(),text_entry6.get(),text_entry7.get(),text_entry8.get(),text_entry9.get())
+        sql_command = "INSERT INTO General(frist_name,last_name,phone,email,address_1,city,state,zipcode,price_paid,user_id) VALUES(%s,%s,%s,%s,%s,%s,%s,%s,%s,%s)"
+        values = (text_entry.get(),text_entry1.get(),text_entry2.get(),text_entry3.get(),text_entry4.get(),text_entry5.get(),text_entry6.get(),text_entry7.get(),text_entry8.get(),text_entry9.get())
+        cursor1.execute(sql_command,values)
+        database.commit()
+        clear_fields()
+        print("Data Inserted")
 
+# Creating function to "Show Data"
+def show_customer():
+    top=Toplevel()
+    top.title("Customer Info")
+    top.geometry("500x500") 
+
+    cursor1.execute("SELECT * FROM General")
+    result = cursor1.fetchall()
+    
+    for index, x in enumerate(result):
+        num=0
+        for y in x:
+            Label(top,text=y).grid(row=index,column=num)
+            num+=1
+    
+    
+    Button(top,text="Export", font=("Helvetica", "12", "bold"), bg="black", fg="white", command=export_csv).grid(row=index+1,column=0)
+
+
+# Creating function to "Search Data" from the database
+def search_customer():
+    top=Toplevel()
+    top.title("Search Customer")
+    top.geometry("500x500") 
+    cursor1.execute("SELECT * FROM General")
+    result = cursor1.fetchall()
 
 # Creating a "Title" Label
 title = Label(root, text="General ", font=("Helvetica", 40), bg="black", fg="orange").place(x=5, y=5)
@@ -184,13 +226,18 @@ text_entry9 = Entry(root, width=30, bg="white", border = 2)
 text_entry9.insert(0, "1")
 text_entry9.bind("<FocusIn>", temp_text9)
 text_entry9.place(x=180, y=552)
-# Creating "Submit" Button
-submit = Button(root, text="Clear", font=("Helvetica", "12", "bold"), bg="black", fg="white", command=clear_fields).place(x=100, y=600)
+
 
 
 
 # CREATING BUTTONS
-Button(root, text="X",padx=10, bg="#F00D4E", command=root.destroy).place(x=1330, y=0)  # Button to exit
-
-
+exit_button = Button(root, text="X",padx=10, bg="#F00D4E", command=root.destroy).place(x=1330, y=0)  # Button to exit
+# Creating "Clear Fields" Button
+clear_field = Button(root, text="Clear", font=("Helvetica", "12", "bold"), bg="black", fg="white", command=clear_fields).place(x=100, y=600)
+# Creating "Add Customer" Button
+add_customer_e = Button(root, text="Add Customer", font=("Helvetica", "12", "bold"), bg="black", fg="white", command=add_customer).place(x=300, y=600)
+# Creating "Show Customers" Button
+show_customers_e = Button(root, text="Show Customers", font=("Helvetica", "12", "bold"), bg="black", fg="white", command=show_customer).place(x=500, y=600)
+# Creating "Search Customer" Button
+search_customer_e = Button(root, text="Search Customer", font=("Helvetica", "12", "bold"), bg="black", fg="white", command=search_customer).place(x=700, y=600)
 root.mainloop()
